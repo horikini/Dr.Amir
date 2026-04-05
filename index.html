@@ -238,6 +238,11 @@ body{font-family:var(--sf);background:var(--bg);color:var(--text);min-height:100
   </div>
 </div>
 
+<!-- small hidden admin link at bottom of welcome, barely visible -->
+<div style="position:fixed;bottom:8px;right:12px;z-index:10">
+  <a href="Admin.html" style="font-size:.6rem;color:rgba(0,0,0,.15);text-decoration:none;font-family:var(--sf)">admin</a>
+</div>
+
 <!-- QUIZ -->
 <div class="screen" id="screen-quiz">
   <div class="quiz-top">
@@ -455,7 +460,8 @@ function getWaConfig(){
   const cfg=loadCfg();
   return {
     number: cfg.waNumber||WA_DEFAULT,
-    text: cfg.waText||'Falar com especialista no WhatsApp'
+    text: cfg.waText||'Falar com especialista no WhatsApp',
+    msg: cfg.waMsg||'Olá {nome}! Fiz a avaliação de saúde e gostaria de saber mais. Minha pontuação geral foi {pontuacao}% e meu IMC é {imc} ({classeimc}). Pode me ajudar?'
   };
 }
 function getImcPenalties(){
@@ -612,6 +618,26 @@ function getRecTexts(){
   const cfg=loadCfg();return {...DEFAULT_REC_TEXTS,...(cfg.recTexts||{})};
 }
 
+function buildMsg(t,l){
+  const imc=l.imc||'—';
+  const label=typeof imc==='number'?(imc<18.5?'Abaixo do Peso':imc<25?'Peso Ideal':imc<30?'Sobrepeso':imc<35?'Obesidade I':imc<40?'Obesidade II':'Obesidade III'):'—';
+  const sc=l.scores||{};
+  return t
+    .replace(/\{nome\}/gi,l.name||'—')
+    .replace(/\{pontuacao\}/gi,(l.overall||0)+'')
+    .replace(/\{imc\}/gi,imc+'')
+    .replace(/\{classeimc\}/gi,label)
+    .replace(/\{idade\}/gi,(l.age||'—')+'')
+    .replace(/\{sexo\}/gi,l.gender==='M'?'Masculino':l.gender==='F'?'Feminino':'—')
+    .replace(/\{peso\}/gi,(l.weight||'—')+'')
+    .replace(/\{altura\}/gi,(l.height||'—')+'')
+    .replace(/\{alimentacao\}/gi,(sc.food||0)+'%')
+    .replace(/\{intestino\}/gi,(sc.gut||0)+'%')
+    .replace(/\{sono\}/gi,(sc.sleep||0)+'%')
+    .replace(/\{atividade\}/gi,(sc.activity||0)+'%')
+    .replace(/\{mental\}/gi,(sc.mental||0)+'%');
+}
+
 function buildResult(lead){
   showScreen('result');const {name,imc,scores,overall}=lead;
   document.getElementById('r-greeting').textContent='Olá, '+name+' 👋';
@@ -667,7 +693,8 @@ function buildResult(lead){
 
   const wa=getWaConfig();
   document.getElementById('wa-btn-text').textContent=wa.text;
-  const msg=encodeURIComponent('Olá! Fiz a avaliação de saúde e gostaria de saber mais. Minha pontuação geral foi '+overall+'% e meu IMC é '+imc+'. Pode me ajudar?');
+  const tpl=wa.msg||'Olá {nome}! Fiz a avaliação de saúde e gostaria de saber mais. Minha pontuação geral foi {pontuacao}% e meu IMC é {imc} ({classeimc}). Pode me ajudar?';
+  const msg=encodeURIComponent(buildMsg(tpl,lead));
   document.getElementById('wa-btn').href='https://wa.me/'+wa.number+'?text='+msg;
 }
 </script>
