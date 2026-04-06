@@ -233,7 +233,7 @@ body{font-family:var(--sf);background:var(--bg);color:var(--text);min-height:100
       <span class="info-icon">🔒</span>
       <p>Suas informações são <strong>100% privadas</strong> e usadas apenas para gerar seu relatório de saúde.</p>
     </div>
-    <button class="btn-main" id="btn-start" onclick="startQuiz()">Começar avaliação gratuita</button>
+    <button class="btn-main" id="btn-start" onclick="startQuiz()">Começar Autoteste</button>
     <p class="terms-link"><a href="#" onclick="openTerms(event)">Termos de Uso e Aviso Legal</a></p>
   </div>
 </div>
@@ -310,11 +310,11 @@ body{font-family:var(--sf);background:var(--bg);color:var(--text);min-height:100
       </svg>
     </div>
     <h3>Analisando seus dados…</h3>
-    <p>Calculando seu perfil de saúde personalizado</p>
+    <p>Calculando seu perfil</p>
     <div class="loading-steps">
       <div class="lstep active" id="ls1"><div class="lstep-dot"></div>Processando respostas</div>
       <div class="lstep" id="ls2"><div class="lstep-dot"></div>Calculando IMC e pontuações</div>
-      <div class="lstep" id="ls3"><div class="lstep-dot"></div>Gerando seu relatório</div>
+      <div class="lstep" id="ls3"><div class="lstep-dot"></div>Gerando seus graficos</div>
       <div class="lstep" id="ls4"><div class="lstep-dot"></div>Finalizando análise</div>
     </div>
     <div class="load-bar-wrap"><div class="load-bar-fill" id="load-bar"></div></div>
@@ -326,8 +326,8 @@ body{font-family:var(--sf);background:var(--bg);color:var(--text);min-height:100
   <div class="result-scroll">
     <div class="result-hero">
       <div class="result-greeting" id="r-greeting"></div>
-      <h2>Seu Relatório de Saúde</h2>
-      <p>Confira sua avaliação completa</p>
+      <h2>Seu Autoteste de Saúde</h2>
+      <p>Confira seu Autoteste Completo</p>
     </div>
     <div class="imc-card glass">
       <div class="imc-top">
@@ -364,7 +364,7 @@ body{font-family:var(--sf);background:var(--bg);color:var(--text);min-height:100
     <div class="wa-wrap">
       <a id="wa-btn" class="btn-wa" href="#" target="_blank">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        <span id="wa-btn-text">Falar com especialista no WhatsApp</span>
+        <span id="wa-btn-text">Falar com um profissinal no WhatsApp</span>
       </a>
       <p class="terms-link"><a href="#" onclick="openTerms(event)">Termos de Uso e Aviso Legal</a></p>
     </div>
@@ -382,7 +382,7 @@ body{font-family:var(--sf);background:var(--bg);color:var(--text);min-height:100
     </div>
     <div class="terms-body">
       <h3>1. Natureza Informativa e Educacional</h3>
-      <p>Este questionário e os relatórios gerados automaticamente constituem, exclusivamente, uma ferramenta de triagem preliminar e caráter informativo. O conteúdo aqui apresentado não configura, sob hipótese alguma:</p>
+      <p>Este Auteste e os relatórios gerados automaticamente constituem, exclusivamente, uma ferramenta de triagem preliminar e caráter informativo. O conteúdo aqui apresentado não configura, sob hipótese alguma:</p>
       <ul>
         <li>Diagnóstico clínico ou médico;</li>
         <li>Prescrição terapêutica ou nutricional;</li>
@@ -527,7 +527,7 @@ function submitLead(){
   if(!age){alert('Por favor, informe sua idade.');return}
   if(!selectedGender){alert('Por favor, selecione seu sexo.');return}
   if(!document.getElementById('chk-terms').checked){alert('Por favor, aceite os Termos de Uso para continuar.');return}
-  if(!document.getElementById('chk-info').checked){alert('Por favor, confirme que está ciente do caráter informativo desta avaliação.');return}
+  if(!document.getElementById('chk-info').checked){alert('Por favor, confirme que está ciente do caráter informativo deste autoteste.');return}
   if(!weight||!height||height<100||height>250){alert('Por favor, informe peso e altura válidos (ex: 170 cm).');return}
   const imc=+(weight/((height/100)**2)).toFixed(1);
   const rawScores=calcScores();
